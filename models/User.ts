@@ -4,6 +4,7 @@
 import AccountType from "./AccountType";
 import MaritalStatus from "./MaritalStatus";
 import Location from "./Location";
+import Role from "./Role";
 import mongoose from "mongoose";
 /**
   * @typedef User represents user's manadatory properties such as:
@@ -25,5 +26,6 @@ export default interface User {
     accountType?: AccountType,
     maritalStatus?: MaritalStatus,
     location?: Location,
-    salary?: number
+    salary?: number,
+    role: Role
 };
