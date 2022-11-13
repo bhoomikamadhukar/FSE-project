@@ -1,6 +1,3 @@
-/**
- * @file declares User datatype.
- */
 import AccountType from "./AccountType";
 import MaritalStatus from "./MaritalStatus";
 import Location from "./Location";

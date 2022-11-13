@@ -1,72 +1,69 @@
 /**
-* @file Implements DAO managing data storage of messages. Uses mongoose MessageModel
-* to integrate with MongoDB
-*/
+ * @file Implements DAO managing data storage of messages. Uses mongoose MessageModel
+ * to integrate with MongoDB
+ */
+import Message from "../models/Message";
 import MessageModel from "../mongoose/MessageModel";
 import MessageDaoI from "../interfaces/MessageDao";
-import Message from "../models/Message";
+import User from "../models/User";
 
 /**
-* @class MessagesDao Implements Data Access Object managing data storage
-* of messages
-* @property {MessageDao} messagesDao Private single instance of MessagesDao
-*/
+ * @class MessageDao Implements Data Access Object managing data storage
+ * of Message
+ * @property {MessageDao} messageDao Private single instance of MessageDao
+ */
 export default class MessageDao implements MessageDaoI {
 
-    /**
-      * Inserts message instance into the database
-      * @param {Message} message Instance to be inserted into the database by a
-      * @returns Promise To be notified when message is inserted into the database
-      */
-    send = async (message: Message): Promise<Message> =>
-        MessageModel.create({ ...message });
-
-    /**
-   * Removes message from the database.
-   * @param {string} mid Primary key of message to be removed
-   * @returns Promise To be notified when message is removed from the database
+  /**
+   * Inserts message instance into the database
+   * @param {string} uid1 User1 who messages another user and instance is added to the database.
+   * @param {string} uid2 User2 who gets a messages another user sent and instance is added to the database.
+   * @param {string} message the content user1 sends to user2.
+   * @returns Promise To be notified when message is sent to user and put into the database
    */
-    unsend = async (mid: string): Promise<any> =>
-        MessageModel.deleteOne({ _id: mid })
-
+    userMessagesUser =  async (uid1: string, uid2: string, message: Message): Promise<Message> =>
+        MessageModel.create({...message, sentTo: uid2, sentFrom: uid1});
     /**
-     * Uses MessageModel to retrieve all sent message documents from 
-     * messages collection
-     * @param sender_id 
-     * @returns Promise To be notified when the tuits are retrieved from
+     * Deletes message instance from the database
+     * @param {string} mid Message Id to be deleted.
+     * @returns Promise To be acknowledge when message is deleted.
+     */
+    userDeletesMessage = async (mid:string): Promise<any> =>
+        MessageModel.deleteOne({_id:mid});
+    /**
+     * Uses MessageModel to retrieve all messages sent by a particular
+     * user
+     * @param {string} uid User's primary key
+     * @returns Promise To be notified when the messages are retrieved from
      * database
      */
-
-    findMessagesSent = async (sender_id: string): Promise<Message[]> =>
+    findAllSentMessages = async (uid: string): Promise<Message[]> =>
         MessageModel
-            .find({ sender: sender_id })
+            .find({sentFrom: uid})
             .populate("message")
             .exec();
-
     /**
-     * Uses MessageModel to retrieve all receieved message documents from 
-     * messages collection
-     * @param receiver_id 
-     * @returns Promise To be notified when the tuits are retrieved from
+     * Uses MessageModel to retrieve all messages recieved by a particular
+     * user
+     * @param {string} uid User's primary key
+     * @returns Promise To be notified when the messages are retrieved from
      * database
      */
-
-    findMessagesReceived = async (receiver_id: string): Promise<Message[]> =>
+    findAllRecievedMessages = async (uid: string): Promise<Message[]> =>
         MessageModel
-            .find({ receiver: receiver_id })
+            .find({sentTo: uid})
             .populate("message")
             .exec();
-
-
-    private static messagesDao: MessageDao | null = null;
     /**
-     * Creates a singleton DAO instance
+     * Creates singleton DAO instance
      * @returns MessageDao
      */
+    private static messageDao: MessageDao | null = null;
     public static getInstance = (): MessageDao => {
-        if (MessageDao.messagesDao === null) {
-            MessageDao.messagesDao = new MessageDao();
+        if(MessageDao.messageDao === null) {
+            MessageDao.messageDao = new MessageDao();
         }
-        return MessageDao.messagesDao;
+        return MessageDao.messageDao;
     }
+
 }

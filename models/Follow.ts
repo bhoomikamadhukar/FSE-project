@@ -1,12 +1,14 @@
 /**
- * @file declares Follow datatype.
+ * @file Creates a model to represent Follows.
  */
 import User from "./User";
+
 /**
-  * @typedef Follow represents user it is being followed by
-  * and user its following.
-  */
+* @typedef Follow represents interaction of users
+* @property {User} followedBy user who is followedBy other Users
+* @property {User} currUser current user following other users.
+*/
 export default interface Follow {
-    self_user:User,
-    userFollowing:User
- };
+    followedBy: User,
+    currUser: User
+};

@@ -1,17 +1,19 @@
 /**
- * @file imports mongoose schema for Messages.
+ * @file Implements schema for messages collection
  */
 import mongoose, { Schema } from "mongoose";
-import Message from "../models/Message";
+import Message from '../models/Message';
 /**
- * @typedef MessagesSchema is how messages are represented.
- * @property {sender} userid: primary keys of sender
- * @property {receiver} userid: primary keys of receiver
+ * @typedef MessageSchema is the Message Schema in mongoose
+ * @property {string} message message to be sent
+ * @property {User} sentFrom user who sends the Messages
+ * @property {User} sentTo user who receives the Messages
+ * @property {Date} sentOn time the message was sent
  */
 const MessageSchema = new mongoose.Schema<Message>({
-   sender: { type: Schema.Types.ObjectId, ref: "UserModel" },
-   receiver: { type: Schema.Types.ObjectId, ref: "UserModel" },
-   message: { type: String },
-   sentOn: { type: Date, default: Date.now }
-}, { collection: 'message' });
+  message:{type:String},
+  sentFrom: {type: Schema.Types.ObjectId, ref: "UserModel"},
+  sentTo: {type: Schema.Types.ObjectId, ref: "UserModel"},
+  sentOn:{type: Date, default: Date.now}
+}, {collection: 'messages'});
 export default MessageSchema;

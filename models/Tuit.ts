@@ -1,18 +1,20 @@
 /**
- * @file declares Tuit datatype.
+ * @file Creates a tuit model which represents
+ * the Tuit datatype.
  */
 import User from "./User";
+
 /**
-  * @typedef Tuit represents the following manadatory properties
-  * @tuit
-  * @postedBy
-  */
-export default interface Tuit {
-    tuit: string,
-    postedBy: User,
-    postedOn?: Date,
-    image?: String,
-    youtube?: String,
-    avatarLogo?: String,
-    imageOverlay?: String,
-};
+ * @typedef Tuit Represents Tuits of Tuiter
+ * @property {ObjectId} _id Unique identifier of User collection
+ * @property {string} tuit contents of Tuit
+ * @property {Date} postedOn date tuit was posted
+ * @property {User} postedBy user who posted tuit
+ */
+export default class Tuit {
+  private id: string = '';
+   private tuit: string = '';
+   private postedOn: Date = new Date();
+   private postedBy: User | null = null;
+
+}

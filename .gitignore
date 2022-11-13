@@ -9,3 +9,5 @@ coverage
 software-engineering-node.code-workspace
 .env
 node-express
+package.json
+package-lock.json

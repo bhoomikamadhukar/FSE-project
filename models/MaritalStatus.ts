@@ -1,14 +1,13 @@
 /**
- * @file for enum MaritalStatus which is used in User.
+ * @file Enumeration representing marital status of user
  */
 
-enum MaritalStatus {
-    Married = 'MARRIED',
-    Single = 'SINGLE',
-    Widowed = 'WIDOWED'
- };
  /**
-  * @typedef MaritalStatus represents user's marital status.
-  */
- export default MaritalStatus;
- 
+ * @typedef MaritalStatus Enumerates possible marital status of Users
+ */
+enum MaritalStatus {
+   Married = 'MARRIED',
+   Single = 'SINGLE',
+   Widowed = 'WIDOWED'
+};
+export default MaritalStatus;

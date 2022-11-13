@@ -1,7 +1,7 @@
 /**
-* @file Implements DAO managing data storage of likes. Uses mongoose LikeModel
-* to integrate with MongoDB
-*/
+ * @file Implements DAO managing data storage of likes. Uses mongoose LikeModel
+ * to integrate to intergrate with MongoDB.
+ */
 import Like from "../models/Like";
 import LikeModel from "../mongoose/LikeModel";
 import LikeDaoI from "../interfaces/LikeDao";
@@ -10,82 +10,57 @@ import Tuit from "../models/Tuit";
 
 /**
  * @class LikeDao Implements Data Access Object managing data storage
- * of Like
- * @property {UserDao} userDao Private single instance of LikeDao
+ * of Likes
+ * @property {LikeDao} likeDao Private single instance of LikeDao
  */
-
 export default class LikeDao implements LikeDaoI {
-
-    /**
-  * Uses LikeModel to create a new like for tuit.
-  * @param {string} uid User id of user who likes the tuit
-  * @param {string} tid Tuit id of tuit to be liked
-  * @returns Promise To be notified when the likes are retrieved from
-  * database
-  */
-
+  /**
+   * Inserts likes instance into the database
+   * @param {string} uid User who likes a user tuit instance is added to the database.
+   * @param {string} tid Tuit which is liked by User.
+   * @returns Promise To be notified when likes is inserted into the database
+   */
     userLikesTuit = async (uid: string, tid: string): Promise<any> =>
-        LikeModel.create({ tuit: tid, likedBy: uid });
-
-    /**
- * Uses LikeModel to remove a  like for tuit.
- * @param {string} uid User id of user who unlikes the tuit
- * @param {string} tid Tuit id of tuit to be unliked
- * @returns Promise To be notified when the likes are deleted from
- * database
- */
-
-    /**
- * Uses LikeModel to count number of likes a tuit has.
- * @param {string} tid Tuit id of tuit to be unliked
- * @returns Promise To be notified with the total likes on specific tuit.
- */
-    findTuitLikesCount = async (tid: string): Promise<any> =>
-        LikeModel.countDocuments({ tuit: tid });
-
-    /**
-   * Uses LikeModel to remove a  like for tuit.
-   * @param {string} uid User id of user who unlikes the tuit
-   * @param {string} tid Tuit id of tuit to be unliked
-   * @returns Promise To be notified when the likes are deleted from
-   * database
+        LikeModel.create({tuit: tid, likedBy: uid});
+  /**
+   * Deletes likes instance from the database
+   * @param {string} uid User's primary key
+   * @param {string} tid Tuits primary key
+   * @returns Promise To be acknowledge when like is deleted.
    */
     userUnlikesTuit = async (uid: string, tid: string): Promise<any> =>
-        LikeModel.deleteOne({ tuit: tid, likedBy: uid });
-
+        LikeModel.deleteOne({tuit: tid, likedBy: uid});
     /**
-      * Uses LikeModel to retrieve all user documents from likes collection
-      * @returns Promise To be notified when the users are retrieved from
-      * database
-      */
-
+     * Uses LikeModel to retrieve all likes to a
+     * particular tuit.
+     * @param {string} tid Tuits's primary key
+     * @returns Promise To be notified when the likes are retrieved from
+     * database
+     */
     findAllUsersThatLikedTuit = async (tid: string): Promise<Like[]> =>
         LikeModel
-            .find({ tuit: tid })
+            .find({tuit: tid})
             .populate("likedBy")
             .exec();
-
     /**
-      * Uses LikeModel to retrieve all like documents from likes collection
-      * @returns Promise To be notified when the likes are retrieved from
-      * database
-      */
+     * Uses LikeModel to retrieve all tuits liked by a particular
+     * user
+     * @param {string} uid User's primary key
+     * @returns Promise To be notified when the messages are retrieved from
+     * database
+     */
     findAllTuitsLikedByUser = async (uid: string): Promise<Like[]> =>
         LikeModel
-            .find({ likedBy: uid })
+            .find({likedBy: uid})
             .populate("tuit")
             .exec();
-
-
-
-    private static likeDao: LikeDao | null = null;
     /**
-     * Creates a singleton DAO instance
-     * @returns likeDao
+     * Creates singleton DAO instance
+     * @returns LikesDao
      */
-
+    private static likeDao: LikeDao | null = null;
     public static getInstance = (): LikeDao => {
-        if (LikeDao.likeDao === null) {
+        if(LikeDao.likeDao === null) {
             LikeDao.likeDao = new LikeDao();
         }
         return LikeDao.likeDao;

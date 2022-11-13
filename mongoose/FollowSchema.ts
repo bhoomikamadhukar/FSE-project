@@ -1,15 +1,15 @@
 /**
- * @file imports mongoose schema for Follow.
+ * @file Implements schema for follows collection
  */
 import mongoose, { Schema } from "mongoose";
 import Follow from '../models/Follow';
 /**
-  * @typedef FollowsSchema is how follows are represented.
-  * @property {userFollowedBy} userid: primary keys of user following a user.
-  * @property {userFollowing} userid: primary keys of user following a user.
-  */
+ * @typedef FollowSchema is the Follow Schema in mongoose
+ * @property {User} followedBy user who is being follows by User
+ * @property {User} currUser current user who follows others
+ */
 const FollowSchema = new mongoose.Schema<Follow>({
-    self_user: { type: Schema.Types.ObjectId, ref: "UserModel" },
-    userFollowing: { type: Schema.Types.ObjectId, ref: "UserModel" },
-}, { collection: 'follow' });
+  followedBy: {type: Schema.Types.ObjectId, ref: "UserModel"},
+  currUser: {type: Schema.Types.ObjectId, ref: "UserModel"},
+}, {collection: 'follows'});
 export default FollowSchema;

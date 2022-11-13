@@ -1,16 +1,15 @@
 /**
- * @file imports mongoose schema for bookmarks.
+ * @file Implements schema for bookmarks collection
  */
-
 import mongoose, { Schema } from "mongoose";
 import Bookmark from '../models/Bookmark';
 /**
-  * @typedef BookmarksSchema is how bookmarks are represented.
-  * @property {bookmarkedBy} userid: primary key of user who bookmarked tuit
-  * @property {tuit} tid: primary key of tuit bookmarked.
-  */
+ * @typedef BookmarkSchema is the Bookmark Schema in mongoose
+ * @property {User} bookmarkedBy user who bookmarks a tuit
+ * @property {Tuit} bookmarkedTuit tuit being bookmarked
+ */
 const BookmarkSchema = new mongoose.Schema<Bookmark>({
-    tuit: { type: Schema.Types.ObjectId, ref: "TuitModel" },
-    bookmarkedBy: { type: Schema.Types.ObjectId, ref: "UserModel" },
-}, { collection: 'bookmarks' });
+  bookmarkedBy: {type: Schema.Types.ObjectId, ref: "UserModel"},
+  bookmarkedTuit: {type: Schema.Types.ObjectId, ref: "TuitModel"},
+}, {collection: 'bookmarks'});
 export default BookmarkSchema;
