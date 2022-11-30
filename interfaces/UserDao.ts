@@ -3,7 +3,7 @@
  */
 import User from "../models/User";
 
-export default interface AdminDao {
+export default interface UserDao {
    findAllUsers(): Promise<User[]>;
    findUserById(uid: string): Promise<any>;
    findUserByUsername(username:string):Promise<any>;

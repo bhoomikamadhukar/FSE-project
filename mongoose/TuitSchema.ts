@@ -1,16 +1,21 @@
 /**
- * @file Implements schema for tuits collection
+ * @file imports mongoose schema for Tuit.
  */
-import mongoose from "mongoose";
+import mongoose, { Schema } from "mongoose";
+import Tuit from "../models/Tuit"
 /**
- * @typedef TuitSchema is the Tuit Schema in mongoose
- * @property {string} tuit tuit being broadcast
- * @property {User} postedBy user who posted the Tuit
- * @property {Date} postedOn time the Tuit was posted
+ * @typedef TuitSchema is how tuits are represented.
+ * @property {ObjecpostedBytId} userid: primary key of user
  */
-const TuitSchema = new mongoose.Schema({
-    tuit: {type: String, required: true},
-    postedBy: {type: mongoose.Schema.Types.ObjectId, ref: "UserModel", required: true},
-    postedOn: {type: Date, default: Date.now},
-}, {collection: 'tuits'});
+const TuitSchema = new mongoose.Schema<Tuit>({
+    tuit: { type: String, required: true },
+    postedBy: { type: Schema.Types.ObjectId, ref: "UserModel" },
+    postedOn: { type: Date, default: Date.now },
+    stats: {
+        replies: {type: Number, default: 0},
+        retuits: {type: Number, default: 0},
+        likes: {type: Number, default: 0},
+        dislikes :{type: Number, default: 0}
+    }
+}, { collection: "tuits" });
 export default TuitSchema;

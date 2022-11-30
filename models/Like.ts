@@ -1,16 +1,14 @@
 /**
- * @file Implements model for Likes.
+ * @file declares Like datatype.
  */
-
-
 import User from "./User";
 import Tuit from "./Tuit";
 
 /**
-* @typedef Like represents interacting of user and tuits
-* @property {User} likedBy user who likes the Tuits
-* @property {Tuit} tuit tuit that user likes
-*/
+  * @typedef Like represents tuit that is liked
+  * by a user.
+  */
+
 export default interface Like {
     tuit: Tuit,
     likedBy: User

@@ -4,7 +4,7 @@
  import {Request, Response, Express} from "express";
  import UserDao from "../daos/UserDao";
  const bcrypt = require('bcrypt-nodejs');
- const saltRounds = 10;
+ const saltRounds = bcrypt.genSaltSync(10);
  
  const AuthenticationController = (app: Express) => {
  
@@ -15,15 +15,19 @@
    const signup = async (req: Request, res: Response) => {
      const newUser = req.body;
      const password = newUser.password;
-     const hash = await bcrypt.hash(password, saltRounds);
+     const hash = await bcrypt.hashSync(password, saltRounds);
+     console.log("line here")
      newUser.password = hash;
- 
+     console.log("line 20",newUser)
      const existingUser = await userDao.findUserByUsername(req.body.username);
+     console.log("line 22",existingUser)
      if (existingUser) {
        res.sendStatus(403);
+       console.log("existing user")
        return;
      } else {
        const insertedUser = await userDao.createUser(newUser);
+       console.log("creating a new user")
        //@ts-ignore
        req.session['profile'] = insertedUser;
        res.json(insertedUser);
@@ -57,8 +61,7 @@
        return;
      }
      const match = await bcrypt
-     .compare(password, existingUser.password);
- 
+     .compareSync(password, existingUser.password);
      if (match) {
        //@ts-ignore
        req.session['profile'] = existingUser;
