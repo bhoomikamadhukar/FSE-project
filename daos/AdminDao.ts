@@ -33,10 +33,18 @@ export default class AdminDao implements AdminDaoI {
       */
     findUserById = async (aid: string): Promise<any> =>
         UserModel.findById(aid);
+/**
+      * Retrieves user object from the database for a particular username and returns
+      * a user object.
+      * @param {String} userName username
+      */
+      findUserByUsername = async(username:string):Promise<any>=>
+        UserModel.findUserByUsername(username)
     /**
      * Create user
       * @param {User} user user object
       */
+
     createUser = async (user: User): Promise<User> =>
         UserModel.create(user);
     /** Update user
