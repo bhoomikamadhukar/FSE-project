@@ -2,7 +2,7 @@
  * @file Controller RESTful Web service API for authentication resource
  */
  import {Request, Response, Express} from "express";
- import UserDao from "../daos/AdminDao";
+ import UserDao from "../daos/UserDao";
  const bcrypt = require('bcrypt-nodejs');
  const saltRounds = 10;
  
