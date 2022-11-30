@@ -39,7 +39,7 @@ export default class AdminDao implements AdminDaoI {
       * @param {String} userName username
       */
       findUserByUsername = async(username:string):Promise<any>=>
-        UserModel.findUserByUsername(username)
+        UserModel.findOne({username:username});
     /**
      * Create user
       * @param {User} user user object
