@@ -34,6 +34,7 @@ export default class AdminController implements AdminControllerI {
             AdminController.adminController = new AdminController();
             app.get("/api/admin", AdminController.adminController.findAllUsers);
             app.get("/api/admin/:uid", AdminController.adminController.findUserById);
+            app.get("/api/admin/:username", AdminController.adminController.findUserByUsername);
             app.post("/api/admin", AdminController.adminController.createUser);
             app.put("/api/admin/:uid", AdminController.adminController.updateUser);
             app.delete("/api/admin/:uid", AdminController.adminController.deleteUser);
@@ -65,6 +66,17 @@ export default class AdminController implements AdminControllerI {
     findUserById = (req: Request, res: Response) =>
         AdminController.adminDao.findUserById(req.params.uid)
             .then((user: User) => res.json(user));
+    
+    /**
+      * Retrieves user object from the database for a particular username and returns
+      * a user object.
+      * @param {Request} req Represents request from client
+      * @param {Response} res Represents response to client, including the
+      * body formatted as JSON arrays containing the user objects
+      */
+     findUserByUsername = (req: Request, res: Response) =>
+     AdminController.adminDao.findUserByUsername(req.params.username)
+         .then((user: User) => res.json(user));
     /**
       * @param {Request} req Represents request from client
       * @param {Response} res Represents response to client, including the
