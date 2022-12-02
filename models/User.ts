@@ -1,29 +1,28 @@
 import AccountType from "./AccountType";
 import MaritalStatus from "./MaritalStatus";
 import Location from "./Location";
-
-export default class User {
-   private id: string;
-   private username: string = '';
-   private password: string = '';
-   private firstName: string | null = null;
-   private lastName: string | null = null;
-   private email: string = '';
-   private profilePhoto: string | null = null;
-   private headerImage: string | null = null;
-   private accountType: AccountType = AccountType.Personal;
-   private maritalStatus: MaritalStatus = MaritalStatus.Single;
-   private biography: string | null = null;
-   private dateOfBirth: Date | null = null;
-   private joined: Date = new Date();
-   private location: Location | null = null;
-   constructor(id: string, username: string, password: string) {
-      this.id = id; this.username = username; this.password = password;
-  }
-  get uName() { return this.username; }
-  get pass() { return this.password; }
-  set ufirstName(value: string) {
-   this.firstName = value;
-}
-
-}
+import Role from "./Role";
+import mongoose from "mongoose";
+/**
+  * @typedef User represents user's manadatory properties such as:
+  * @username
+  * @password
+  * @email
+  */
+export default interface User {
+    _id?: mongoose.Schema.Types.ObjectId,
+    username: string,
+    password: string,
+    email: string,
+    firstName?: string,
+    lastName?: string,
+    profilePhoto?: string,
+    headerImage?: string,
+    biography?: string,
+    dateOfBirth?: Date,
+    accountType?: AccountType,
+    maritalStatus?: MaritalStatus,
+    location?: Location,
+    salary?: number,
+    role: Role
+};

@@ -6,3 +6,8 @@ out
 coverage
 .DS_Store
 .vscode
+software-engineering-node.code-workspace
+.env
+node-express
+package.json
+package-lock.json
