@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import User from "../models/User";
+import Role from "../models/Role";
 const UserSchema = new mongoose.Schema<User>({
     username: {type: String, required: true, default: `testusername${Date.now()}`},
     password: {type: String, required: true, default: `testpassword${Date.now()}`},
@@ -17,7 +18,7 @@ const UserSchema = new mongoose.Schema<User>({
         longitude: Number
     },
     salary: {type: Number, default: 50000},
-    role: {type: String,  enum: ["ADMIN", "USER"]}
+    role: {type: String, default: Role.User,  enum: Object.values(Role)}
 }, {collection: "users"});
 
 export default UserSchema;
