@@ -14,7 +14,7 @@
  import session from "express-session";
  
  //require('dotenv').config()
- const connectionString="mongodb+srv://nikithajain888:Passwordfse@cluster0.uz88i7e.mongodb.net/FSE-DB?retryWrites=true&w=majority";
+ const connectionString="mongodb+srv://root:root@cluster0.pxaz2ky.mongodb.net/?retryWrites=true&w=majority";
  mongoose.connect(connectionString);
  // const userName = process.env.USERNAME;
  // const password = process.env.PASSWORD;
@@ -62,5 +62,5 @@
   * Start a server listening at port 4000 locally
   * but use environment variable PORT on Heroku if available.
   */
- const PORT = 3000;
+ const PORT = 4000;
  app.listen(process.env.PORT || PORT);

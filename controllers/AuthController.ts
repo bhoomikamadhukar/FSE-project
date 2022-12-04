@@ -16,11 +16,8 @@
      const newUser = req.body;
      const password = newUser.password;
      const hash = await bcrypt.hashSync(password, saltRounds);
-     console.log("line here")
      newUser.password = hash;
-     console.log("line 20",newUser)
      const existingUser = await userDao.findUserByUsername(req.body.username);
-     console.log("line 22",existingUser)
      if (existingUser) {
        res.sendStatus(403);
        console.log("existing user")
